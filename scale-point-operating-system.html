@@ -3,134 +3,680 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Scale Point Marketing operating system case study by Steffani van Wyk: Airtable strategy and operations architecture, n8n automation, CRM and governance.">
+<meta name="description" content="Scale Point Marketing operating system case study by Steffani van Wyk. Airtable strategy and operations architecture, n8n automation, CRM evidence, QA, approvals and delivery controls.">
 <title>Scale Point Marketing Operating System | Steffani van Wyk</title>
 <style>
 :root{--navy:#081522;--navy2:#10263a;--panel:#10283d;--line:#dbe6ec;--teal:#5ed8c5;--green:#6ee7a5;--amber:#f3c76a;--blue:#8bb9ff;--ink:#102236;--muted:#617487;--bg:#f5f8fa;--white:#fff;--shadow:0 20px 60px rgba(12,32,50,.12)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}.wrap{max-width:1160px;margin:auto;padding:0 28px}a{color:inherit}nav{position:sticky;top:0;z-index:30;background:rgba(8,21,34,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}nav .inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:850;text-decoration:none;color:#fff}.brand span{color:var(--teal)}.navlinks{display:flex;gap:18px;align-items:center;color:#c5d7e5;font-size:14px}.navlinks a{text-decoration:none}.pill{border:1px solid #35556c;padding:8px 12px;border-radius:999px}.hero{background:radial-gradient(circle at 86% 12%,rgba(94,216,197,.17),transparent 26%),linear-gradient(140deg,var(--navy),#10283d);color:#fff;padding:86px 0 70px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.17em;color:var(--teal);font-weight:850}.hero h1{font-size:clamp(42px,7vw,74px);line-height:1.02;letter-spacing:-.045em;margin:12px 0 20px;max-width:980px}.hero p{font-size:19px;color:#c6d8e4;max-width:820px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-block;text-decoration:none;border-radius:12px;padding:12px 16px;font-weight:780;font-size:14px}.btn.primary{background:var(--teal);color:#08231e}.btn.secondary{border:1px solid #456179;color:#eef9ff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:46px}.stat{padding:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);border-radius:16px}.stat b{display:block;font-size:25px}.stat span{font-size:12px;color:#a8bece}
-section{padding:76px 0}.sectionhead{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:30px}.sectionhead h2{font-size:38px;margin:5px 0 0;letter-spacing:-.03em;line-height:1.1}.sectionhead p{margin:0;color:var(--muted);max-width:550px}.dark{background:var(--navy);color:#fff}.dark .sectionhead p{color:#a8bfce}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 10px 28px rgba(17,42,62,.04)}.dark .card{background:#0e2539;border-color:#24465f}.card h3{font-size:23px;margin:8px 0 10px;letter-spacing:-.02em}.card p{color:#5d7183}.dark .card p{color:#b7c9d6}.tagrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.tag{font-size:11px;border-radius:999px;padding:6px 9px;background:#edf4f6;color:#4a6273}.dark .tag{background:#17334b;color:#c9dbe7}.label{font-size:11px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#17887d}.dark .label{color:var(--teal)}
-.arch{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;gap:10px;align-items:stretch}.arch .box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}.arch .arrow{display:flex;align-items:center;justify-content:center;font-size:28px;color:#1a8c80;font-weight:900}.arch h3{margin:6px 0 12px}.arch ul{margin:0;padding-left:18px;color:#607486}.panel{background:linear-gradient(145deg,#0b1b29,#112b40);border:1px solid #254861;color:#fff;border-radius:22px;padding:26px;box-shadow:var(--shadow)}.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}.node{border:1px solid #345c78;background:#10273b;border-radius:11px;padding:9px 11px;color:#d9e8f1;font-size:12px}.arrow2{color:var(--teal);font-weight:900}.tables{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.tableitem{background:#f8fbfc;border:1px solid #dce7ed;border-radius:13px;padding:12px}.tableitem b{display:block;font-size:13px}.tableitem span{font-size:11px;color:#6d7f8e}.status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}.live{background:#e6f8ee;color:#247248}.tested{background:#e9f1ff;color:#3263a8}.roadmap{background:#fff4d8;color:#876114}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}.auto{display:grid;grid-template-columns:100px 1fr 140px;gap:15px;padding:16px 0;border-top:1px solid #dce6ec}.auto:first-child{border-top:0}.auto .name{font-weight:800}.auto p{margin:2px 0;color:#607385}.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.principle{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px}.principle b{display:block;color:#137f75;margin-bottom:4px}.timeline{display:grid;gap:12px}.phase{display:grid;grid-template-columns:145px 1fr;gap:20px;padding:18px;border:1px solid #dce6ec;border-radius:16px;background:#fff}.phase .num{font-weight:850;color:#15857a}.note{border-left:3px solid var(--teal);padding:5px 0 5px 14px;margin:20px 0;color:#4a6273}.footer{background:#06131f;color:#b8c9d5;padding:42px 0}.footer .inner{display:flex;align-items:flex-end;justify-content:space-between;gap:25px}.footer h2{color:#fff;margin:0 0 5px}
-@media(max-width:880px){.stats,.grid2,.grid3,.principles{grid-template-columns:1fr 1fr}.arch{grid-template-columns:1fr}.arch .arrow{transform:rotate(90deg)}.tables{grid-template-columns:1fr 1fr}.auto{grid-template-columns:1fr}.sectionhead{display:block}.phase{grid-template-columns:1fr}.navlinks a:not(.pill){display:none}}
-@media(max-width:560px){.wrap{padding:0 18px}.stats,.grid2,.grid3,.principles,.tables{grid-template-columns:1fr}.hero{padding-top:60px}.hero h1{font-size:43px}.footer .inner{display:block}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1180px;margin:auto;padding:0 28px}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:30;background:rgba(8,21,34,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+nav .inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:850;text-decoration:none;color:#fff;letter-spacing:.02em}
+.brand span{color:var(--teal)}
+.navlinks{display:flex;gap:18px;align-items:center;color:#c5d7e5;font-size:14px}
+.navlinks a{text-decoration:none}
+.pill{border:1px solid #35556c;padding:8px 12px;border-radius:999px}
+.hero{background:radial-gradient(circle at 86% 12%,rgba(94,216,197,.17),transparent 26%),radial-gradient(circle at 10% 90%,rgba(139,185,255,.12),transparent 25%),linear-gradient(140deg,var(--navy),#10283d);color:#fff;padding:88px 0 72px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.17em;color:var(--teal);font-weight:850}
+.hero h1{font-size:clamp(42px,7vw,74px);line-height:1.02;letter-spacing:-.045em;margin:12px 0 20px;max-width:1000px}
+.hero p{font-size:19px;color:#c6d8e4;max-width:860px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;text-decoration:none;border-radius:12px;padding:12px 16px;font-weight:780;font-size:14px}
+.btn.primary{background:var(--teal);color:#08231e}
+.btn.secondary{border:1px solid #456179;color:#eef9ff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:46px}
+.stat{padding:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);border-radius:16px}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:12px;color:#a8bece}
+section{padding:76px 0}
+.sectionhead{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:30px}
+.sectionhead h2{font-size:38px;margin:5px 0 0;letter-spacing:-.03em;line-height:1.1}
+.sectionhead p{margin:0;color:var(--muted);max-width:570px}
+.dark{background:var(--navy);color:#fff}
+.dark .sectionhead p{color:#a8bfce}
+.label{font-size:11px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#17887d}
+.dark .label{color:var(--teal)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 10px 28px rgba(17,42,62,.04)}
+.dark .card{background:#0e2539;border-color:#24465f}
+.card h3{font-size:23px;margin:8px 0 10px;letter-spacing:-.02em}
+.card p{color:#5d7183}
+.dark .card p{color:#b7c9d6}
+.tagrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.tag{font-size:11px;border-radius:999px;padding:6px 9px;background:#edf4f6;color:#4a6273}
+.dark .tag{background:#17334b;color:#c9dbe7}
+.introgrid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+.problem{background:#fff;border:1px solid var(--line);border-radius:22px;padding:27px}
+.problem h3{margin-top:0;font-size:25px}
+.questionlist{display:grid;gap:10px}
+.question{padding:12px 14px;border-left:3px solid var(--teal);background:#f8fbfc;border-radius:0 12px 12px 0}
+.question b{display:block}
+.arch{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;gap:10px;align-items:stretch}
+.arch .box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+.arch .arrow{display:flex;align-items:center;justify-content:center;font-size:28px;color:#1a8c80;font-weight:900}
+.arch h3{margin:6px 0 12px}
+.arch ul{margin:0;padding-left:18px;color:#607486}
+.panel{background:linear-gradient(145deg,#0b1b29,#112b40);border:1px solid #254861;color:#fff;border-radius:22px;padding:26px;box-shadow:var(--shadow)}
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.node{border:1px solid #345c78;background:#10273b;border-radius:11px;padding:9px 11px;color:#d9e8f1;font-size:12px}
+.arrow2{color:var(--teal);font-weight:900}
+.systemsplit{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ownerbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.ownerbox strong{display:block;font-size:26px;color:#15857a;margin-bottom:5px}
+.tables{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.tableitem{background:#f8fbfc;border:1px solid #dce7ed;border-radius:13px;padding:12px}
+.tableitem b{display:block;font-size:13px}
+.tableitem span{font-size:11px;color:#6d7f8e}
+.screenshot{margin:34px 0 50px;background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.screenshot img{width:100%;display:block;background:#eef3f6}
+.shotcopy{padding:24px 26px 27px}
+.shotcopy .num{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:850;color:#17887d}
+.shotcopy h3{font-size:28px;margin:7px 0 10px;letter-spacing:-.025em}
+.shotcopy p{color:#5d7183;margin:8px 0}
+.solved{margin-top:16px;background:#f1f8f7;border-left:3px solid var(--teal);padding:12px 14px;border-radius:0 10px 10px 0}
+.caption{font-size:12px;color:#718291;margin-top:13px}
+.status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}
+.live{background:#e6f8ee;color:#247248}
+.tested{background:#e9f1ff;color:#3263a8}
+.roadmap{background:#fff4d8;color:#876114}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.auto{display:grid;grid-template-columns:105px 1fr 160px;gap:15px;padding:18px 0;border-top:1px solid #dce6ec}
+.auto:first-child{border-top:0}
+.auto .name{font-weight:800;font-size:16px}
+.auto p{margin:3px 0;color:#607385}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.principle{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px}
+.principle b{display:block;color:#137f75;margin-bottom:4px}
+.ownership{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ownership div{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}
+.ownership b{display:block;margin-bottom:3px}
+.timeline{display:grid;gap:12px}
+.phase{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px;border:1px solid #dce6ec;border-radius:16px;background:#fff}
+.phase .num{font-weight:850;color:#15857a}
+.note{border-left:3px solid var(--teal);padding:5px 0 5px 14px;margin:20px 0;color:#4a6273}
+.quote{font-size:30px;line-height:1.3;letter-spacing:-.02em;max-width:900px;margin:0}
+.quote span{color:var(--teal)}
+.footer{background:#06131f;color:#b8c9d5;padding:42px 0}
+.footer .inner{display:flex;align-items:flex-end;justify-content:space-between;gap:25px}
+.footer h2{color:#fff;margin:0 0 5px}
+@media(max-width:900px){
+.stats,.grid2,.grid3,.principles,.ownership{grid-template-columns:1fr 1fr}
+.introgrid,.systemsplit{grid-template-columns:1fr}
+.arch{grid-template-columns:1fr}
+.arch .arrow{transform:rotate(90deg)}
+.tables{grid-template-columns:1fr 1fr}
+.auto{grid-template-columns:1fr}
+.sectionhead{display:block}
+.phase{grid-template-columns:1fr}
+.navlinks a:not(.pill){display:none}
+}
+@media(max-width:560px){
+.wrap{padding:0 18px}
+.stats,.grid2,.grid3,.principles,.ownership,.tables{grid-template-columns:1fr}
+.hero{padding-top:60px}
+.hero h1{font-size:43px}
+.footer .inner{display:block}
+.screenshot{border-radius:15px}
+.shotcopy{padding:19px}
+}
 </style>
 </head>
 <body>
-<nav><div class="wrap inner"><a class="brand" href="index.html">STEFFANI <span>VAN WYK</span></a><div class="navlinks"><a href="#proposal">Proposal</a><a href="#strategy">Strategy Base</a><a href="#operations">Operations Base</a><a href="#automation">Automation</a><a class="pill" href="index.html">Back to portfolio</a></div></div></nav>
+<nav>
+<div class="wrap inner">
+<a class="brand" href="index.html">STEFFANI <span>VAN WYK</span></a>
+<div class="navlinks">
+<a href="#proposal">Proposal</a>
+<a href="#strategy">Strategy</a>
+<a href="#operations">Operations</a>
+<a href="#automation">Automation</a>
+<a class="pill" href="index.html">Back to portfolio</a>
+</div>
+</div>
+</nav>
 
-<header class="hero"><div class="wrap"><div class="eyebrow">Scale Point Marketing · Operating System Case Study</div><h1>Designing a connected operating model for a growing marketing agency.</h1><p>I joined Scale Point Marketing in a Paid Media and CRM role. As I worked across client strategy and delivery, I saw that the larger constraint was not another campaign tool. It was fragmented information, inconsistent handoffs, duplicated reporting and too much critical knowledge living in people rather than in a reusable system.</p><div class="actions"><a class="btn primary" href="#proposal">See the system</a><a class="btn secondary" href="index.html">Portfolio home</a></div><div class="stats"><div class="stat"><b>2 Airtable bases</b><span>strategy and operations separated by purpose</span></div><div class="stat"><b>51-node workflow</b><span>real lean strategy extraction architecture</span></div><div class="stat"><b>n8n + GHL</b><span>automation and CRM evidence layer</span></div><div class="stat"><b>Human-gated</b><span>strategy and consequential actions stay reviewable</span></div></div></div></header>
+<header class="hero">
+<div class="wrap">
+<div class="eyebrow">Scale Point Marketing · Operating System Case Study</div>
+<h1>Designing the operating layer behind a growing marketing agency.</h1>
+<p>I originally joined Scale Point Marketing in a Paid Media and CRM role. As I became more involved across client strategy, reporting, QA and delivery, a larger operational issue became clear. The agency already had capable specialist tools, but information and decisions were distributed across CRM records, ad platforms, meetings, task boards, Slack conversations and individual team members.</p>
+<p>The problem was not a lack of software. It was the lack of a connected operating model around the software.</p>
+<div class="actions">
+<a class="btn primary" href="#proposal">See the system</a>
+<a class="btn secondary" href="#screens">See live interface examples</a>
+<a class="btn secondary" href="index.html">Portfolio home</a>
+</div>
+<div class="stats">
+<div class="stat"><b>2 Airtable systems</b><span>strategy and operations separated by purpose</span></div>
+<div class="stat"><b>51-node workflow</b><span>real n8n strategy extraction architecture</span></div>
+<div class="stat"><b>Multi-client</b><span>configuration-led architecture designed for reuse</span></div>
+<div class="stat"><b>Human-gated</b><span>strategy and consequential actions stay reviewable</span></div>
+</div>
+</div>
+</header>
 
-<section id="proposal"><div class="wrap"><div class="sectionhead"><div><div class="label">The proposal</div><h2>Build one operating layer around the tools already in use</h2></div><p>The original proposal was not to replace specialist systems. It was to create a management layer that could connect them, preserve each system's role, and give leadership and delivery teams one consistent way to understand what was happening.</p></div>
+<section>
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">The challenge</div><h2>Too much critical context lived between systems</h2></div>
+<p>Campaign data, lead outcomes, strategy, approvals and delivery activity were all available, but they did not naturally form one operating loop.</p>
+</div>
+<div class="introgrid">
+<div class="problem">
+<h3>The agency needed a consistent way to answer five questions</h3>
+<div class="questionlist">
+<div class="question"><b>What is happening?</b>What do CRM, campaign and website signals actually show?</div>
+<div class="question"><b>Why is it happening?</b>What does the evidence suggest about the current strategy?</div>
+<div class="question"><b>What should change?</b>What decision or experiment should happen next?</div>
+<div class="question"><b>Who needs to act?</b>Which person or department owns execution?</div>
+<div class="question"><b>Did it work?</b>What happened after the change was implemented?</div>
+</div>
+</div>
+<div class="panel">
+<div class="label">The problem in practice</div>
+<h3 style="font-size:27px;margin:8px 0 12px">A decision could start in one place and finish in five others.</h3>
+<p style="color:#b8cad6">A campaign decision might be made in a meeting, execution discussed in Slack, work tracked somewhere else, campaign data held in Meta, lead outcomes in GoHighLevel, and the original reasoning left in someone's memory.</p>
+<div class="flow">
+<span class="node">Meeting</span><span class="arrow2">→</span>
+<span class="node">Slack</span><span class="arrow2">→</span>
+<span class="node">Task board</span><span class="arrow2">→</span>
+<span class="node">Meta</span><span class="arrow2">→</span>
+<span class="node">GHL</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="proposal">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">The proposal</div><h2>Build one operating layer around the tools already in use</h2></div>
+<p>The original proposal was not to replace specialist systems. It was to connect them, preserve each system's role, and create one repeatable management model around strategy and delivery.</p>
+</div>
 <div class="arch">
-  <div class="box"><div class="label">Source systems</div><h3>Where the work already lived</h3><ul><li>GoHighLevel for CRM and pipeline activity</li><li>Meta for delivery and paid-media performance</li><li>Microsoft Clarity for landing-page behaviour</li><li>Monday for task execution</li><li>Slack for team communication</li><li>Fathom and documents for meeting and strategy context</li></ul></div>
-  <div class="arrow">→</div>
-  <div class="box"><div class="label">Orchestration</div><h3>Automation and interpretation</h3><ul><li>n8n reads, moves, aggregates and classifies</li><li>AI assists with architecture, logic, synthesis and QA</li><li>Exception handling makes broken data visible</li><li>Approval gates protect strategic and client-facing decisions</li></ul></div>
-  <div class="arrow">→</div>
-  <div class="box"><div class="label">Operating layer</div><h3>Airtable as two connected systems</h3><ul><li>Strategy Command Centre stores strategic memory</li><li>Operations & Handoff System stores delivery state</li><li>Approved actions move between them through controlled bridges</li><li>Results return to strategy for the next review cycle</li></ul></div>
+<div class="box">
+<div class="label">Source systems</div>
+<h3>Where the work already lived</h3>
+<ul>
+<li>GoHighLevel for CRM and pipeline activity</li>
+<li>Meta for delivery and paid-media performance</li>
+<li>Microsoft Clarity for landing-page behaviour</li>
+<li>Monday for task execution where appropriate</li>
+<li>Slack for team communication</li>
+<li>Fathom and strategic documents for context</li>
+</ul>
 </div>
-<div class="note">The core principle was simple: connect and interpret existing systems rather than building another platform that duplicates them.</div>
-</div></section>
+<div class="arrow">→</div>
+<div class="box">
+<div class="label">Orchestration</div>
+<h3>Automation and interpretation</h3>
+<ul>
+<li>n8n reads, moves, aggregates and classifies</li>
+<li>AI assists with architecture, logic, synthesis and QA</li>
+<li>Exception handling makes broken data visible</li>
+<li>Approval gates protect strategic and client-facing decisions</li>
+</ul>
+</div>
+<div class="arrow">→</div>
+<div class="box">
+<div class="label">Operating layer</div>
+<h3>Two connected Airtable systems</h3>
+<ul>
+<li>Strategy Command Centre stores strategic memory</li>
+<li>Tasks & Handoff System stores delivery state</li>
+<li>Approved actions move between them through controlled bridges</li>
+<li>Results return to strategy for the next review cycle</li>
+</ul>
+</div>
+</div>
+<div class="note">The core principle: connect and interpret existing systems rather than creating another platform that duplicates them.</div>
+</div>
+</section>
 
-<section class="dark"><div class="wrap"><div class="sectionhead"><div><div class="label">The operating loop</div><h2>Evidence → judgement → execution → learning</h2></div><p>The system was designed so strategy and operations remain linked without becoming the same thing.</p></div>
-<div class="panel"><div class="flow"><span class="node">GHL / Meta / Clarity / Commercial data</span><span class="arrow2">→</span><span class="node">What is happening?</span><span class="arrow2">→</span><span class="node">Airtable Strategy Command Centre</span><span class="arrow2">→</span><span class="node">Why is it happening?</span><span class="arrow2">→</span><span class="node">What should we test?</span><span class="arrow2">→</span><span class="node">Operations</span><span class="arrow2">→</span><span class="node">Results back to Strategy</span></div></div>
-</div></section>
+<section class="dark">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">The operating loop</div><h2>Evidence → judgement → execution → learning</h2></div>
+<p>The system was designed so strategy and operations remain linked without becoming the same thing.</p>
+</div>
+<div class="panel">
+<div class="flow">
+<span class="node">GHL / Meta / Clarity / Commercial data</span>
+<span class="arrow2">→</span>
+<span class="node">What is happening?</span>
+<span class="arrow2">→</span>
+<span class="node">Strategy Command Centre</span>
+<span class="arrow2">→</span>
+<span class="node">Why is it happening?</span>
+<span class="arrow2">→</span>
+<span class="node">What should we test?</span>
+<span class="arrow2">→</span>
+<span class="node">Operations</span>
+<span class="arrow2">→</span>
+<span class="node">Results back to Strategy</span>
+</div>
+</div>
+<div class="systemsplit" style="margin-top:18px">
+<div class="ownerbox"><strong>STRATEGY OWNS WHY</strong><span>Strategic rationale, evidence, hypothesis, decisions, tests and learning.</span></div>
+<div class="ownerbox"><strong>OPERATIONS OWNS DELIVERY</strong><span>Who, what, when, QA, approvals, handoffs, launch and completion state.</span></div>
+</div>
+</div>
+</section>
 
-<section id="strategy"><div class="wrap"><div class="sectionhead"><div><div class="label">Airtable base 01</div><h2>SPM Strategy Command Centre</h2></div><p>A lean multi-client strategy base. Raw CRM history stays in source platforms. Airtable keeps the evidence, decisions and memory needed for recurring strategic reviews.</p></div>
+<section id="strategy">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Airtable system 01</div><h2>SPM Strategy Command Centre</h2></div>
+<p>A lean multi-client strategy base. Raw CRM history stays in source platforms. Airtable keeps the evidence, decisions and memory needed for recurring strategic reviews.</p>
+</div>
+
 <div class="grid2">
-  <div class="card"><div class="label">Strategic header</div><h3>One current view of each client</h3><p>The client record holds the live strategic position: objective, funnel, primary constraint, current strategy, offer, ICP, positioning, active angles, review status, winning evidence, losing evidence and recommended action.</p><div class="tagrow"><span class="tag">Client Key isolation</span><span class="tag">Review RAG</span><span class="tag">Setup health</span></div></div>
-  <div class="card"><div class="label">Evidence layer</div><h3>Decision-grade summaries, not raw dumps</h3><p>Evidence tables hold current and previous-period summaries, customer language, marketing performance and exceptions that need human attention.</p><div class="tagrow"><span class="tag">Last 30 vs previous 30</span><span class="tag">Traceable syncs</span><span class="tag">Human review</span></div></div>
+<div class="card">
+<div class="label">Strategic header</div>
+<h3>One current view of each client</h3>
+<p>The client record holds the live strategic position: objective, funnel, primary constraint, current strategy, offer, ICP, positioning, active angles, review status, winning evidence, losing evidence and recommended action.</p>
+<div class="tagrow"><span class="tag">Client isolation</span><span class="tag">Review RAG</span><span class="tag">Strategic attention</span></div>
+</div>
+<div class="card">
+<div class="label">Evidence layer</div>
+<h3>Decision-grade summaries, not raw data dumps</h3>
+<p>Evidence tables hold current and previous-period summaries, customer language, marketing performance and exceptions that need human attention.</p>
+<div class="tagrow"><span class="tag">Last 30 vs previous 30</span><span class="tag">Traceable syncs</span><span class="tag">Human review</span></div>
+</div>
+</div>
+
+<div id="screens" class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1G39YL_N-YSYc2jwSRfULzdkwcablEReX&sz=w1800" alt="SPM Strategy Command Centre portfolio priority view with client RAG and review scheduling">
+<div class="shotcopy">
+<div class="num">Strategy screenshot 01</div>
+<h3>Portfolio Priority: strategic attention across the client portfolio</h3>
+<p>I created a portfolio view that combines review timing with strategic attention. Review RAG shows whether a formal strategy review is due, while Strategy Attention remains a separate judgement about whether an account needs intervention now.</p>
+<p>This distinction matters because a client can be fully up to date with its review cadence and still require urgent strategic attention because performance, conversion or another constraint has changed.</p>
+<div class="solved"><b>What this solved</b><br>It created a structured answer to: <em>Which client should I review first?</em></div>
+<div class="caption">Portfolio Priority: client-level prioritisation using review cadence, RAG logic and strategy attention.</div>
+</div>
+</div>
+
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1lnk6B6F2C4rLuTSWJf9R52ucaz_255sr&sz=w1800" alt="SPM Strategy Command Centre system guide and checklists">
+<div class="shotcopy">
+<div class="num">Strategy screenshot 02</div>
+<h3>System Guide & Checklists: building the operating logic into the system</h3>
+<p>A system is difficult to scale if the knowledge required to use it exists only with the person who built it. I created a guide directly inside the Strategy Command Centre covering how the system works, new client setup, formal strategy reviews, testing and implementation, prioritisation and evidence requirements.</p>
+<p>Each guide section explains the purpose, when to use it, the process and the checklist required before the work is considered complete.</p>
+<div class="solved"><b>What this solved</b><br>It reduced dependence on undocumented knowledge and made the Strategy Command Centre a repeatable operating framework rather than a personal dashboard.</div>
+<div class="caption">Embedded process documentation supports onboarding, consistency and repeatability.</div>
+</div>
+</div>
+
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1Ln8yWYD8JkxB00Q4q-gbZQvlciPqXLeO&sz=w1800" alt="SPM client strategy workspace showing strategic reasoning, actions and active tests">
+<div class="shotcopy">
+<div class="num">Strategy screenshot 03</div>
+<h3>Client Strategy Workspace: making the current strategy visible and traceable</h3>
+<p>Instead of storing strategy across meetings, documents and Slack threads, the Client Strategy Workspace brings the current reasoning into one structured view. It captures the reason the strategy exists, recommended actions, active tests, strategy status and review timing.</p>
+<p>The important part is the reasoning behind the action. A change to an ad angle, landing page or CRM process can be connected back to the strategic constraint that made the action necessary.</p>
+<div class="solved"><b>What this solved</b><br>It reduced the gap between performance evidence and execution by making the strategic why visible alongside the next action.</div>
+<div class="caption">Client Strategy Workspace: current strategic rationale, recommended actions, active tests and review cadence.</div>
+</div>
+</div>
+
+<div class="sectionhead" style="margin-top:60px">
+<div><div class="label">Evidence architecture</div><h2>What sits underneath the strategic workspace</h2></div>
+<p>The Strategy Command Centre keeps only the evidence required for strategic review. Specialist platforms remain the raw source of truth.</p>
 </div>
 <div class="tables">
-  <div class="tableitem"><b>Clients</b><span>live strategic header and configuration</span></div>
-  <div class="tableitem"><b>Strategy Reviews</b><span>formal review history and strategic synthesis</span></div>
-  <div class="tableitem"><b>Tests</b><span>hypotheses, success measures and learning</span></div>
-  <div class="tableitem"><b>Strategic Decisions</b><span>what changed and why</span></div>
-  <div class="tableitem"><b>CRM Snapshot</b><span>lead and response evidence by period</span></div>
-  <div class="tableitem"><b>Funnel Summary</b><span>pipeline, stage and status movement</span></div>
-  <div class="tableitem"><b>Messaging Summary</b><span>conversation and response patterns</span></div>
-  <div class="tableitem"><b>Appointment Summary</b><span>bookings and appointment behaviour</span></div>
-  <div class="tableitem"><b>Meta Performance Summary</b><span>ad-level delivery evidence</span></div>
-  <div class="tableitem"><b>Email Engagement Summary</b><span>workflow and email performance</span></div>
-  <div class="tableitem"><b>Customer Voice</b><span>objections, intent, sentiment and language</span></div>
-  <div class="tableitem"><b>Strategic Exceptions</b><span>missing attribution, stalled activity and anomalies</span></div>
-  <div class="tableitem"><b>Confirmed Bookings</b><span>commercial outcome enrichment</span></div>
-  <div class="tableitem"><b>Clarity Performance</b><span>landing-page behaviour and friction</span></div>
-  <div class="tableitem"><b>Competitor Intelligence</b><span>external market evidence only</span></div>
-  <div class="tableitem"><b>Sync Log</b><span>visibility of extraction health and failure</span></div>
+<div class="tableitem"><b>Clients</b><span>live strategic header and configuration</span></div>
+<div class="tableitem"><b>Strategy Reviews</b><span>formal review history and synthesis</span></div>
+<div class="tableitem"><b>Tests</b><span>hypotheses, variables and learning</span></div>
+<div class="tableitem"><b>Strategic Decisions</b><span>what changed and why</span></div>
+<div class="tableitem"><b>CRM Snapshot</b><span>lead and response evidence by period</span></div>
+<div class="tableitem"><b>Funnel Summary</b><span>pipeline, stage and status movement</span></div>
+<div class="tableitem"><b>Messaging Summary</b><span>conversation and response patterns</span></div>
+<div class="tableitem"><b>Appointment Summary</b><span>booking and appointment evidence</span></div>
+<div class="tableitem"><b>Meta Performance</b><span>ad-level delivery evidence</span></div>
+<div class="tableitem"><b>Email Engagement</b><span>workflow and email performance</span></div>
+<div class="tableitem"><b>Customer Voice</b><span>objections, intent and recurring language</span></div>
+<div class="tableitem"><b>Strategic Exceptions</b><span>missing attribution and anomalies</span></div>
+<div class="tableitem"><b>Confirmed Bookings</b><span>commercial outcome reconciliation</span></div>
+<div class="tableitem"><b>Clarity Performance</b><span>landing-page behaviour and friction</span></div>
+<div class="tableitem"><b>Competitor Intelligence</b><span>external market evidence only</span></div>
+<div class="tableitem"><b>Sync Log</b><span>visibility of extraction health and failure</span></div>
 </div>
-</div></section>
+</div>
+</section>
 
-<section class="dark" id="operations"><div class="wrap"><div class="sectionhead"><div><div class="label">Airtable base 02</div><h2>SPM Tasks & Handoff System</h2></div><p>The operations base focuses on ownership, delivery, quality, handoffs and health. It deliberately does not own strategic reasoning.</p></div>
+<section class="dark" id="operations">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Airtable system 02</div><h2>SPM Tasks & Handoff System</h2></div>
+<p>The operations layer focuses on ownership, delivery, quality, handoffs, approvals and performance controls. It deliberately does not own strategic reasoning.</p>
+</div>
 <div class="grid3">
-  <div class="card"><div class="label">Work control</div><h3>Tasks and recurring controls</h3><p>Tracks ownership, status, due dates, recurring controls and delivery evidence. Monday can remain the task source where appropriate, with sync logic designed to avoid loops.</p></div>
-  <div class="card"><div class="label">Quality control</div><h3>QA Queue and defect history</h3><p>Separates maker checks, reviewer checks, client approval and launch gates. Returns become visible rework data instead of disappearing into chat.</p></div>
-  <div class="card"><div class="label">Flow control</div><h3>Department handovers</h3><p>Tracks movement between specialist teams, ownership changes, timing, blockers and completed stages so bottlenecks can be surfaced.</p></div>
-  <div class="card"><div class="label">Client health</div><h3>RAG and recovery</h3><p>Creates a structured place for weekly client health, recovery ownership and evidence rather than relying on subjective memory.</p></div>
-  <div class="card"><div class="label">Performance</div><h3>KPI snapshots</h3><p>Historical KPI records are designed to stay immutable so weekly performance can be compared without old values changing later.</p></div>
-  <div class="card"><div class="label">Onboarding</div><h3>Milestones and launch readiness</h3><p>Maps the route from contract to launch, with milestone ownership and escalation rules for delayed setup.</p></div>
+<div class="card"><div class="label">Work control</div><h3>Tasks and recurring controls</h3><p>Tracks ownership, status, priority, due dates and delivery evidence so work can be viewed by team member and client.</p></div>
+<div class="card"><div class="label">Quality control</div><h3>QA and defect visibility</h3><p>Separates maker checks, reviewer checks, client approval and launch readiness so rework becomes visible operational evidence.</p></div>
+<div class="card"><div class="label">Flow control</div><h3>Department handovers</h3><p>Tracks movement between specialists, ownership changes, timing, blockers and completed stages so handoffs do not rely on memory.</p></div>
+<div class="card"><div class="label">Client health</div><h3>RAG and recovery</h3><p>Creates a structured place for client health, recovery ownership and attention instead of relying on subjective memory.</p></div>
+<div class="card"><div class="label">Performance</div><h3>Creative health and alerts</h3><p>Connects live ad evidence with operational action states such as keep running, watch or needs more data.</p></div>
+<div class="card"><div class="label">Approvals</div><h3>Launch readiness</h3><p>Separates asset completion, QA, client approval and permission to launch into distinct controls.</p></div>
 </div>
-<div class="tables">
-  <div class="tableitem"><b>Clients</b><span>operational client configuration</span></div>
-  <div class="tableitem"><b>Team</b><span>roles, ownership and working context</span></div>
-  <div class="tableitem"><b>Tasks</b><span>delivery work and exceptions</span></div>
-  <div class="tableitem"><b>Recurring Task Templates</b><span>repeatable operating controls</span></div>
-  <div class="tableitem"><b>QA Queue</b><span>tiered review and launch gates</span></div>
-  <div class="tableitem"><b>Defect Log</b><span>rework and defect learning</span></div>
-  <div class="tableitem"><b>Department Handovers</b><span>cross-functional flow and timing</span></div>
-  <div class="tableitem"><b>Client Health</b><span>RAG, recovery and client risk</span></div>
-  <div class="tableitem"><b>KPI Snapshots</b><span>historical performance scorecards</span></div>
-  <div class="tableitem"><b>Onboarding Progress</b><span>milestones toward launch</span></div>
-  <div class="tableitem"><b>Meeting / Coaching</b><span>structured operational follow-through</span></div>
-  <div class="tableitem"><b>Automation Registry</b><span>automation purpose, trigger, owner and status</span></div>
 </div>
-</div></section>
+</section>
 
-<section id="automation"><div class="wrap"><div class="sectionhead"><div><div class="label">n8n automation layer</div><h2>Automations organised by business purpose</h2></div><p>The production architecture evolved beyond a single extractor into orchestration, evidence collection, reporting, strategy synthesis and controlled handoff. Some operations automations remain roadmap items, so the portfolio distinguishes built and tested components from planned controls.</p></div>
+<section>
+<div class="wrap">
 
-<div class="auto"><div><span class="status live"><span class="dot"></span>Built</span></div><div><div class="name">Universal GHL strategy worker</div><p>Processes one configured client per execution. Reads contacts, opportunities, conversations, appointments and confirmed bookings while writing only lean strategic summaries and exceptions to Airtable.</p></div><div class="tagrow"><span class="tag">GHL</span><span class="tag">Airtable</span><span class="tag">n8n</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1ZitJ_qzUXUuLRuKzYqfM5ZDvRE83mrZB&sz=w1800" alt="SPM team workflow dashboard with open tasks grouped by owner">
+<div class="shotcopy">
+<div class="num">Operations screenshot 01</div>
+<h3>Team Workflow Dashboard: making ownership and workload visible</h3>
+<p>The dashboard brings open client work into one operational view. Tasks can be grouped by owner and show the associated client, status, priority and due-date information.</p>
+<div class="solved"><b>What this solved</b><br>It created a clearer answer to: <em>Who owns this and what still needs to happen?</em></div>
+<div class="caption">Open work grouped by team member supports accountability and workload visibility.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status tested"><span class="dot"></span>Tested</span></div><div><div class="name">Strategy orchestration</div><p>Builds a client queue and calls reusable workers using client configuration rather than rebuilding the workflow account by account.</p></div><div class="tagrow"><span class="tag">Multi-client</span><span class="tag">Config-driven</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1R2zq0_9kZ_OYz1Yo5sro0MmaxxdnrAFN&sz=w1800" alt="SPM completed tasks dashboard">
+<div class="shotcopy">
+<div class="num">Operations screenshot 02</div>
+<h3>Completed Tasks: preserving execution history</h3>
+<p>The system does not only show what remains outstanding. Completed work remains visible with client and owner context so delivery history can be reviewed instead of disappearing when a task is closed.</p>
+<div class="solved"><b>What this solved</b><br>The operating system can answer both what needs to happen and what has already happened.</div>
+<div class="caption">Closed-loop task visibility supports handover, review and accountability.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status live"><span class="dot"></span>Built</span></div><div><div class="name">Email engagement and customer voice</div><p>Separates heavier email and conversation analysis from the core CRM extraction so those branches cannot block the core strategy evidence run.</p></div><div class="tagrow"><span class="tag">Email</span><span class="tag">Customer Voice</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1jaL3ej9tq2ix2zZpYOtGdYtTuqgisyxn&sz=w1800" alt="SPM QA needing action workflow">
+<div class="shotcopy">
+<div class="num">Operations screenshot 03</div>
+<h3>QA Needing Action: turning quality control into a structured workflow</h3>
+<p>Quality control was designed as a process rather than an informal message asking someone to check an asset. The QA system supports stages such as Draft, Submitted, In Review, Returned, Resubmitted, Passed and Blocked.</p>
+<p>Maker ownership, reviewer status, client, deliverable and fix notes can stay attached to the same work item.</p>
+<div class="solved"><b>What this solved</b><br>Corrections and rework no longer need to disappear into chat. QA can become measurable operational evidence.</div>
+<div class="caption">Structured QA with maker ownership, review states and fix-note visibility.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status live"><span class="dot"></span>Built</span></div><div><div class="name">Meta performance and creative intelligence</div><p>Owns Meta delivery and ad-level evidence separately from the GHL worker so CRM health and media access failures are not confused.</p></div><div class="tagrow"><span class="tag">Meta</span><span class="tag">Creative QA</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1OKUnnmcdkyyzMZJqKBdGXXwlgSx4Yuk5&sz=w1800" alt="SPM performance alerts and controls view">
+<div class="shotcopy">
+<div class="num">Operations screenshot 04</div>
+<h3>Performance Alerts & Controls: turning data into operational attention</h3>
+<p>Performance data is only useful when it helps someone decide what to do. The performance-control layer converts live ad evidence into action states such as Keep Running, Creative Watch, Learning / Needs Data and Allocation Watch.</p>
+<p>The design deliberately distinguishes poor performance from insufficient evidence. A new creative with limited spend should not automatically be treated as a failed creative.</p>
+<div class="solved"><b>What this solved</b><br>It reduced the risk of premature creative decisions based on incomplete data.</div>
+<div class="caption">Performance evidence becomes a visible action state rather than another reporting metric.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status live"><span class="dot"></span>Built</span></div><div><div class="name">Clarity behavioural evidence</div><p>Pulls landing-page behaviour into a defined page scope so funnel friction can inform strategy without treating Clarity as the lead source of truth.</p></div><div class="tagrow"><span class="tag">Clarity</span><span class="tag">Landing pages</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1WFHey6tIJV-eowYF2EtiQEeu4EbbmYYn&sz=w1800" alt="SPM live creative health view">
+<div class="shotcopy">
+<div class="num">Operations screenshot 05</div>
+<h3>Live Creative Health: monitoring the creative lifecycle</h3>
+<p>The live creative view connects active ads to learning stage, performance state and required action. Instead of reducing every ad to good or bad, the system recognises stages such as Discovery, Optimisation and Scaling.</p>
+<div class="solved"><b>What this solved</b><br>Creative decisions can reflect maturity and available evidence rather than a single metric viewed without context.</div>
+<div class="caption">A lifecycle-based creative health view connecting Meta activity to operational action.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status tested"><span class="dot"></span>Tested</span></div><div><div class="name">Monday performance review and Friday trend check</div><p>Creates recurring evidence-led reporting. Friday reporting is deliberately prevented from silently creating operations tasks, keeping reporting separate from approved execution.</p></div><div class="tagrow"><span class="tag">Weekly rhythm</span><span class="tag">No task writes</span></div></div>
+<div class="screenshot">
+<img loading="lazy" src="https://drive.google.com/thumbnail?id=1ddVwMAnCbvleTcL2Lub1OZKMmlHJSR1p&sz=w1800" alt="SPM creative library">
+<div class="shotcopy">
+<div class="num">Operations screenshot 06</div>
+<h3>Creative Library: connecting assets to delivery state</h3>
+<p>The visual library connects creative assets to client, launch readiness, planned go-live timing and Meta status. It gives the team an operational view of creative inventory instead of relying on folders alone.</p>
+<div class="solved"><b>What this solved</b><br>Creative assets could be seen in the context of their delivery state, not just stored as files.</div>
+<div class="caption">A visual asset library with campaign and launch metadata attached to each creative.</div>
+</div>
+</div>
 
-<div class="auto"><div><span class="status tested"><span class="dot"></span>Tested</span></div><div><div class="name">Strategy → Operations Bridge</div><p>Only approved execution actions can move from Strategy into Tasks, QA Queue or Department Handovers. The strategic why, hypothesis and success measure travel with the handoff.</p></div><div class="tagrow"><span class="tag">Approval gate</span><span class="tag">Idempotent</span></div></div>
+<div class="sectionhead" style="margin-top:64px">
+<div><div class="label">Additional operational controls</div><h2>Handovers and launch approval</h2></div>
+<p>These controls are part of the same Operations system even where the public portfolio does not show every internal screen in full.</p>
+</div>
 
-<div class="auto"><div><span class="status tested"><span class="dot"></span>Tested</span></div><div><div class="name">Operations → Strategy Return</div><p>Returns operational status, completion and evidence to the originating execution action without allowing Operations to overwrite the strategic rationale.</p></div><div class="tagrow"><span class="tag">Closed loop</span><span class="tag">Traceable</span></div></div>
+<div class="grid2">
+<div class="card">
+<div class="label">Department Handovers</div>
+<h3>Making cross-functional transitions explicit</h3>
+<p>Marketing delivery often breaks at the point where one specialist finishes and another needs to begin. The handoff layer records the work package, client, current state, next owner, timing and completion status.</p>
+<div class="flow">
+<span class="tag">Strategy</span><span>→</span><span class="tag">Creative</span><span>→</span><span class="tag">QA</span><span>→</span><span class="tag">Paid Media</span>
+</div>
+<p><b>What this solved:</b> transitions no longer need to depend entirely on someone remembering to message the next person.</p>
+</div>
+<div class="card">
+<div class="label">Approval Hub</div>
+<h3>Separating finished from ready to launch</h3>
+<p>A creative can be finished but still not be QA passed, client approved or ready to launch. The Approval Hub keeps those states separate so completion is not confused with permission to go live.</p>
+<div class="flow">
+<span class="tag">Asset complete</span><span>→</span><span class="tag">QA</span><span>→</span><span class="tag">Client approval</span><span>→</span><span class="tag">Launch ready</span>
+</div>
+<p><b>What this solved:</b> clearer launch gates and less ambiguity between production completion and campaign readiness.</p>
+</div>
+</div>
 
-<div class="auto"><div><span class="status tested"><span class="dot"></span>Pilot</span></div><div><div class="name">Formal strategy synthesis</div><p>Reads multiple evidence sources and prepares draft strategy review, decision and test outputs only when a formal strategic review is justified. Human sign-off remains required.</p></div><div class="tagrow"><span class="tag">AI-assisted</span><span class="tag">Draft first</span></div></div>
+</div>
+</section>
 
-<div class="auto"><div><span class="status roadmap"><span class="dot"></span>Roadmap</span></div><div><div class="name">Operational control automations</div><p>The operations registry also defines controls for QA alerts, SLA breaches, onboarding milestones, KPI snapshots, client-health RAG, launch gates, report compliance and bottleneck monitoring. These are shown as roadmap controls unless production status has been verified.</p></div><div class="tagrow"><span class="tag">QA</span><span class="tag">SLA</span><span class="tag">RAG</span><span class="tag">Onboarding</span></div></div>
-</div></section>
+<section class="dark" id="automation">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">n8n automation layer</div><h2>The Airtable interfaces are the visible layer. n8n connects the system behind them.</h2></div>
+<p>The automation architecture is organised by business purpose, with each workflow owning a defined responsibility instead of trying to make one giant automation do everything.</p>
+</div>
 
-<section class="dark"><div class="wrap"><div class="sectionhead"><div><div class="label">Design governance</div><h2>Rules that keep the system trustworthy</h2></div><p>The architecture is intentionally conservative around data truth and automation. The goal is faster decision-making without creating invisible automation risk.</p></div>
+<div class="card" style="margin-bottom:18px">
+<div class="label">Core principle</div>
+<h3>GHL keeps raw CRM history. Airtable keeps lean strategic evidence.</h3>
+<p>n8n handles transport, aggregation, classification and controlled writes between those layers. The system avoids copying entire CRM histories into Airtable because doing so would create duplicate data, conflicting sources of truth and unnecessary system weight.</p>
+</div>
+
+<div class="auto">
+<div><span class="status live"><span class="dot"></span>Built</span></div>
+<div><div class="name">Universal GHL strategy extraction</div><p>A reusable worker processes one configured client per execution and reads contacts, opportunities, conversations, appointments and confirmed bookings. It writes strategic summaries and selected exceptions rather than raw CRM rows.</p></div>
+<div class="tagrow"><span class="tag">GHL</span><span class="tag">Airtable</span><span class="tag">n8n</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status live"><span class="dot"></span>Built</span></div>
+<div><div class="name">51-node strategy workflow</div><p>One of the core strategy extractors developed into a 51-node architecture handling multiple evidence branches, transformations, Airtable writes and sync logging. It was built iteratively through execution, debugging, correction and retesting.</p></div>
+<div class="tagrow"><span class="tag">51 nodes</span><span class="tag">Error handling</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Tested</span></div>
+<div><div class="name">Multi-client orchestration</div><p>Builds a client queue and calls reusable workers using configuration rather than rebuilding the same logic account by account.</p></div>
+<div class="tagrow"><span class="tag">Config-driven</span><span class="tag">Reusable</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status live"><span class="dot"></span>Built</span></div>
+<div><div class="name">Email engagement and customer voice</div><p>Separates heavier email and conversation analysis from core CRM extraction. Email performance, objections, intent, sentiment and recurring customer language can feed strategy without blocking the main evidence run.</p></div>
+<div class="tagrow"><span class="tag">Email</span><span class="tag">Customer Voice</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status live"><span class="dot"></span>Built</span></div>
+<div><div class="name">Meta performance and creative intelligence</div><p>Meta delivery and creative evidence are handled independently from the GHL worker. A Meta access problem therefore does not masquerade as a CRM data problem.</p></div>
+<div class="tagrow"><span class="tag">Meta</span><span class="tag">Creative health</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status live"><span class="dot"></span>Built</span></div>
+<div><div class="name">Microsoft Clarity behavioural evidence</div><p>Landing-page behaviour is brought into strategy as behavioural evidence. Clarity helps identify friction but is not treated as the source of truth for actual leads.</p></div>
+<div class="tagrow"><span class="tag">Clarity</span><span class="tag">Funnel behaviour</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Tested</span></div>
+<div><div class="name">Monday Performance Review</div><p>Recurring evidence-led reporting focuses on what happened, what changed, what needs attention and what should be tested next.</p></div>
+<div class="tagrow"><span class="tag">Weekly review</span><span class="tag">Strategy</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Tested</span></div>
+<div><div class="name">Friday Implementation & Trend Check</div><p>Tracks what was completed, what remains outstanding and whether the trend changed after Monday. The reporting workflow is deliberately prevented from silently creating operations tasks.</p></div>
+<div class="tagrow"><span class="tag">Trend check</span><span class="tag">No task writes</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Tested</span></div>
+<div><div class="name">Strategy → Operations Bridge</div><p>Only approved execution actions can move into Tasks, QA Queue or Department Handovers. The strategic reason, hypothesis and success measure travel with the action.</p></div>
+<div class="tagrow"><span class="tag">Approval gate</span><span class="tag">Idempotent</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Tested</span></div>
+<div><div class="name">Operations → Strategy Return</div><p>Operational status, completion and evidence can return to the originating strategic action without allowing Operations to overwrite the strategic rationale.</p></div>
+<div class="tagrow"><span class="tag">Closed loop</span><span class="tag">Traceable</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status tested"><span class="dot"></span>Pilot</span></div>
+<div><div class="name">AI-assisted formal strategy synthesis</div><p>Reads multiple evidence sources and prepares draft strategy-review, decision and test outputs only when a strategic review is justified. Formal changes still require human review.</p></div>
+<div class="tagrow"><span class="tag">AI-assisted</span><span class="tag">Draft first</span></div>
+</div>
+
+<div class="auto">
+<div><span class="status roadmap"><span class="dot"></span>Roadmap</span></div>
+<div><div class="name">Expanded operational controls</div><p>The wider operating-system roadmap includes automated SLA escalation, onboarding controls, KPI snapshots, client-health monitoring, deeper launch gates and management alerting. These are kept separate from verified production status.</p></div>
+<div class="tagrow"><span class="tag">SLA</span><span class="tag">Onboarding</span><span class="tag">RAG</span></div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Source-of-truth model</div><h2>Each system has one defined responsibility</h2></div>
+<p>This prevents the reporting layer from quietly becoming a second CRM or a second ad platform.</p>
+</div>
+<div class="grid3">
+<div class="card"><div class="label">GoHighLevel</div><h3>CRM truth</h3><p>Actual leads, enquiries, qualification, opportunities, appointments and booking progression.</p></div>
+<div class="card"><div class="label">Meta</div><h3>Media delivery truth</h3><p>Spend, impressions, reach, clicks and ad-level delivery evidence.</p></div>
+<div class="card"><div class="label">Clarity</div><h3>Behavioural evidence</h3><p>Landing-page behaviour and friction after the click.</p></div>
+<div class="card"><div class="label">Strategy Command Centre</div><h3>Strategic memory</h3><p>Evidence summaries, reasoning, tests, decisions and review history.</p></div>
+<div class="card"><div class="label">Operations System</div><h3>Delivery truth</h3><p>Ownership, task state, QA, approvals, handoffs and completion.</p></div>
+<div class="card"><div class="label">n8n</div><h3>Movement and orchestration</h3><p>Transport, aggregation, classification, routing and controlled updates.</p></div>
+</div>
+</div>
+</section>
+
+<section class="dark">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Design governance</div><h2>Rules that keep the system trustworthy</h2></div>
+<p>Automation was designed to improve decision speed without making important actions invisible or uncontrolled.</p>
+</div>
 <div class="principles">
-  <div class="principle"><b>One source of truth</b><span>Each metric has an authoritative system. GHL owns actual leads and bookings; Meta owns delivery; Clarity owns behaviour.</span></div>
-  <div class="principle"><b>Lean strategic memory</b><span>Airtable stores summaries, decisions and evidence rather than becoming a duplicate CRM.</span></div>
-  <div class="principle"><b>Read before write</b><span>Automations validate context before creating or updating consequential records.</span></div>
-  <div class="principle"><b>Human approval first</b><span>Formal strategy and execution actions remain approval-gated.</span></div>
-  <div class="principle"><b>Visible failures</b><span>Sync logs and exceptions show when access, configuration or data has failed.</span></div>
-  <div class="principle"><b>Config over reinvention</b><span>Client-specific settings change while the core architecture stays reusable.</span></div>
-  <div class="principle"><b>Idempotent handoffs</b><span>Repeated automation runs update the same execution record instead of creating duplicates.</span></div>
-  <div class="principle"><b>Separate why from delivery</b><span>Strategy owns reasoning; Operations owns execution state.</span></div>
+<div class="principle"><b>Preserve the source of truth</b><span>Do not duplicate entire specialist systems without a strong operational reason.</span></div>
+<div class="principle"><b>Read before write</b><span>Automation should understand the current record and system state before creating consequential changes.</span></div>
+<div class="principle"><b>Human approval where judgement matters</b><span>Strategy, client-facing actions and important operational decisions remain reviewable.</span></div>
+<div class="principle"><b>Make failures visible</b><span>Broken access or missing data becomes a visible health issue rather than silently producing misleading reporting.</span></div>
+<div class="principle"><b>Configuration before duplication</b><span>New clients should be onboarded through configuration wherever possible.</span></div>
+<div class="principle"><b>Separate strategy from execution</b><span>Strategy owns the rationale and learning. Operations owns the delivery state.</span></div>
+<div class="principle"><b>Design for repeatability</b><span>Processes are documented and built to be reused by the wider team.</span></div>
+<div class="principle"><b>Use AI as a collaborator</b><span>AI accelerates build and analysis, but source systems and human validation remain authoritative.</span></div>
 </div>
-</div></section>
+</div>
+</section>
 
-<section><div class="wrap"><div class="sectionhead"><div><div class="label">Implementation journey</div><h2>From proposal to working system</h2></div><p>The case study reflects an iterative build rather than presenting the full future-state proposal as though every component was live on day one.</p></div>
+<section>
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">My contribution</div><h2>What I personally owned</h2></div>
+<p>My contribution crossed strategy, process design, automation, QA and implementation. The value was in connecting those disciplines into one operating model.</p>
+</div>
+<div class="ownership">
+<div><b>Operating-model design</b><span>Mapped the system boundaries, information flows and ownership rules.</span></div>
+<div><b>Process diagnosis</b><span>Identified where information, handoffs and decisions were breaking down.</span></div>
+<div><b>Airtable architecture</b><span>Designed the Strategy and Operations structures, relationships and interfaces.</span></div>
+<div><b>n8n workflow development</b><span>Built and iterated reusable extraction, reporting and bridge workflows.</span></div>
+<div><b>Source-of-truth governance</b><span>Defined what each platform should remain authoritative for.</span></div>
+<div><b>Strategic review design</b><span>Created review cadence, tests, strategic decisions and priority logic.</span></div>
+<div><b>QA and handoff architecture</b><span>Structured quality control, ownership transfer and launch-readiness logic.</span></div>
+<div><b>Automation troubleshooting</b><span>Resolved API, permission, data-health, duplicate and workflow execution issues.</span></div>
+<div><b>Documentation</b><span>Built system guides and checklists so the operating logic could be reused.</span></div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Implementation journey</div><h2>From proposal to working system</h2></div>
+<p>The case study reflects an iterative build. It does not present the wider future-state proposal as if every component was already live.</p>
+</div>
 <div class="timeline">
-  <div class="phase"><div class="num">01 · Diagnose</div><div><b>Map fragmentation and operational bottlenecks.</b><br><span>Client information, reporting, approvals, handoffs and strategic memory were distributed across multiple tools and people.</span></div></div>
-  <div class="phase"><div class="num">02 · Propose</div><div><b>Define the Scale Point Operating System concept.</b><br><span>Keep specialist systems in place, add a connected management layer, and introduce AI and automation behind controlled human workflows.</span></div></div>
-  <div class="phase"><div class="num">03 · Build Strategy</div><div><b>Create and test the Strategy Command Centre.</b><br><span>Implement lean strategic evidence, client isolation, review logic, source-of-truth rules and recurring strategic memory.</span></div></div>
-  <div class="phase"><div class="num">04 · Build Operations</div><div><b>Create a separate delivery and handoff model.</b><br><span>Structure Tasks, QA, defects, handovers, client health, onboarding and KPI history around ownership and delivery state.</span></div></div>
-  <div class="phase"><div class="num">05 · Connect</div><div><b>Build controlled n8n bridges and reusable workers.</b><br><span>Move approved strategy into execution, return delivery status to strategy and reduce client-by-client rebuilding through configuration.</span></div></div>
-  <div class="phase"><div class="num">06 · Iterate</div><div><b>Use real client data to identify edge cases.</b><br><span>Correct source mismatches, access failures, stale data, duplicate logic and reporting assumptions as the system is tested across accounts.</span></div></div>
+<div class="phase"><div class="num">01 · Diagnose</div><div><b>Map fragmentation and operational bottlenecks.</b><br><span>Client information, reporting, approvals, handoffs and strategic memory were distributed across multiple tools and people.</span></div></div>
+<div class="phase"><div class="num">02 · Propose</div><div><b>Define the Scale Point Operating System concept.</b><br><span>Keep specialist systems in place, add a connected management layer and introduce AI and automation behind controlled human workflows.</span></div></div>
+<div class="phase"><div class="num">03 · Build Strategy</div><div><b>Create and test the Strategy Command Centre.</b><br><span>Implement lean strategic evidence, client isolation, review logic, source-of-truth rules and recurring strategic memory.</span></div></div>
+<div class="phase"><div class="num">04 · Build Operations</div><div><b>Create a separate delivery and handoff model.</b><br><span>Structure tasks, QA, defects, handovers, creative health, approvals and delivery visibility around ownership and state.</span></div></div>
+<div class="phase"><div class="num">05 · Connect</div><div><b>Build controlled n8n bridges and reusable workers.</b><br><span>Move approved strategy into execution, return delivery status to strategy and reduce client-by-client rebuilding through configuration.</span></div></div>
+<div class="phase"><div class="num">06 · Iterate</div><div><b>Use real client data to identify edge cases.</b><br><span>Correct source mismatches, access failures, stale data, duplicates and reporting assumptions as the system is tested across accounts.</span></div></div>
 </div>
-</div></section>
+</div>
+</section>
 
-<footer class="footer"><div class="wrap inner"><div><h2>Scale Point Marketing Operating System</h2><div>Case study by Steffani van Wyk</div><div style="font-size:12px;color:#8198a9;margin-top:5px">Public portfolio version. Credentials, client PII and confidential identifiers are intentionally excluded.</div></div><div class="actions"><a class="btn primary" href="index.html">Back to portfolio</a><a class="btn secondary" href="resume.html">Resume</a></div></div></footer>
+<section class="dark">
+<div class="wrap">
+<div class="sectionhead">
+<div><div class="label">Implementation status</div><h2>What is live, what is tested, and what remains roadmap</h2></div>
+<p>Keeping this distinction visible is part of the portfolio itself. I do not present the full future-state operating-system proposal as completed production infrastructure.</p>
+</div>
+<div class="grid3">
+<div class="card">
+<div class="label">Implemented and actively used</div>
+<h3>Core operating environment</h3>
+<p>Strategy Command Centre, portfolio prioritisation, client strategy workspaces, reviews, tests, CRM evidence, customer voice, email engagement, Clarity evidence, creative monitoring, Tasks & Handoff structures, QA and creative library.</p>
+</div>
+<div class="card">
+<div class="label">Built and tested</div>
+<h3>Automation architecture</h3>
+<p>Reusable client extraction, recurring report workflows, Strategy → Operations bridge, Operations → Strategy return and formal strategy synthesis.</p>
+</div>
+<div class="card">
+<div class="label">Defined roadmap</div>
+<h3>Expanded operating controls</h3>
+<p>Additional SLA escalation, onboarding automation, broader KPI history, deeper launch-gate enforcement and management alerting.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="label">What the system demonstrates</div>
+<p class="quote">The strongest part of the project is not any individual Airtable view or n8n workflow. It is the operating model behind them: <span>data → evidence → strategic interpretation → human decision → controlled execution → QA → launch → performance → learning → back into strategy.</span></p>
+<div class="note" style="margin-top:34px">Marketing operations is not just about automating tasks. It is about creating an environment where the right information reaches the right person, at the right stage, with enough context to make a good decision.</div>
+<div class="tagrow" style="margin-top:24px">
+<span class="tag">Airtable</span><span class="tag">n8n</span><span class="tag">GoHighLevel</span><span class="tag">Meta Ads Manager</span><span class="tag">Microsoft Clarity</span><span class="tag">Monday.com</span><span class="tag">Slack</span><span class="tag">Fathom</span><span class="tag">AI-assisted workflow development</span>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="wrap inner">
+<div>
+<h2>Scale Point Marketing Operating System</h2>
+<div>Case study by Steffani van Wyk</div>
+<div style="font-size:12px;color:#8198a9;margin-top:5px">Public portfolio version. Credentials, API tokens and account identifiers are intentionally excluded. Screenshots are used as operating-system evidence.</div>
+</div>
+<div class="actions">
+<a class="btn primary" href="index.html">Back to portfolio</a>
+<a class="btn secondary" href="resume.html">Resume</a>
+</div>
+</div>
+</footer>
 </body>
 </html>
